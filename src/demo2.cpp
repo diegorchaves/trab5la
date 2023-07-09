@@ -121,13 +121,14 @@ void deletar(int c)
     }
 }
 
-void fimTexto(int c)
+void fimTexto()
 {
-    while (texto1[c - posicaoInicial] != ' ')
+    int c = maxCaracteres;
+    while (texto1[c] == ' ')
     {
-        c++;
+        c--;
     }
-    cursorCol = c;
+    cursorCol = c + posicaoInicial + 1;
 }
 
 void maiusculo()
@@ -160,10 +161,14 @@ void converteTamanhoAscii (int cont)
 
 void inverteString()
 {
-    int cont = 0;
-    while (texto1[cont] != ' ')
+    int cont = 0, index = posicaoInicial + maxCaracteres;
+    while (index >= posicaoInicial)
     {
-        cont++;
+        if (texto1[index] != ' ')
+        {
+            cont++;
+        }
+        index--;
     }
 
     for (int i = 0; i <= maxCaracteres; i++)
@@ -286,7 +291,7 @@ void cbKeyboard(int key, int modifier, bool special, bool up)
                     break;
 
                 case 50: // end (2 funciona como END)
-                    fimTexto(cursorCol);
+                    fimTexto();
                     break;
 
                 case 127: //delete
