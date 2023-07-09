@@ -6,21 +6,23 @@
 #include "demo2.h"
 
 // variaveis globais que guardam as coordenadas do cursor, que se move segundo o mouse ou setas
-int cursorLin = 5, cursorCol = 5;
-int estagio = 0;
-int tamanhoPalavra = 0;
+const int cursorLin = 5;
 const int posicaoInicial = 5;
-char num1 = ' ', num2 = ' ';
+const int maxCaracteres = 20;
+
+int cursorCol = 5;
+int estagio = 0;
+char dezenaQtdCaract = ' ', unidadeQtdCaract = ' ';
 
 // mensagem estatica
-char msg[] = "Use as setas para mover o cursor, aperte ENTER para fazer as operacoes";
+char msg[] = "Setas movem o cursor, ENTER para fazer as operacoes, a tecla 2 funciona como END";
 char qtdCaracteres[] = "Qtd caract:";
 
 // matriz global que guarda o texto digitado pelo usuario para ser exibido a cada render
 // sem essa matriz, o texto digitado é perdido, pois o MPC nao tem buffer permanente de dados
 char texto[APP_LINES][APP_COLUMNS];
+
 char *texto1 = (char *)malloc(21 * sizeof(char));
-// char *texto2 = (char*) malloc (21 * sizeof(char));
 char *texto3 = (char *)malloc(21 * sizeof(char));
 
 // faz as inicializacoes basicas do MPC
@@ -43,14 +45,12 @@ void initMpc(void)
     // posição e tamanho da 'janela' onde as IMAGENS poderão aparecer
     mpcSetClippingArea(0, 0, APP_LINES, APP_COLUMNS);
 
-    // carrega a imagem e associa com um identificador numerico
-    // idDaImagem = mpcLoadBmp("./resources/mini.bmp");
-    for (int i = 0; i < 21; i++)
+    for (int i = 0; i < maxCaracteres + 1; i++)
     {
         texto1[i] = ' ';
     }
 
-    for (int i = 0; i < 21; i++)
+    for (int i = 0; i < maxCaracteres + 1; i++)
     {
         texto3[i] = ' ';
     }
@@ -61,25 +61,25 @@ void initMpc(void)
 void desenhaCaixas(void)
 {
     for (int l = posicaoInicial; l < posicaoInicial + 1; l++)
-        for (int c = posicaoInicial; c < posicaoInicial + 22; c++)
+        for (int c = posicaoInicial; c < posicaoInicial + maxCaracteres + 2; c++)
         {
             mpcSetChar(l, c, texto[l][c], F_STD, BLACK, YELLOW_1, 1);
         }
 
     for (int l = posicaoInicial + 3; l < posicaoInicial + 4; l++)
-        for (int c = posicaoInicial; c < posicaoInicial + 22; c++)
+        for (int c = posicaoInicial; c < posicaoInicial + maxCaracteres + 2; c++)
         {
             mpcSetChar(l, c, texto[l][c], F_STD, BLACK, BLUE_6, 1);
         }
 
     for (int l = posicaoInicial + 6; l < posicaoInicial + 7; l++)
-        for (int c = posicaoInicial; c < posicaoInicial + 22; c++)
+        for (int c = posicaoInicial; c < posicaoInicial + maxCaracteres + 2; c++)
         {
             mpcSetChar(l, c, texto[l][c], F_STD, BLACK, BLUE_6, 1);
         }
 
     for (int l = posicaoInicial + 9; l < posicaoInicial + 10; l++)
-        for (int c = posicaoInicial; c < posicaoInicial + 15; c++)
+        for (int c = posicaoInicial; c < posicaoInicial + maxCaracteres - 5; c++)
         {
             mpcSetChar(l, c, texto[l][c], F_STD, BLACK, BLUE_6, 1);
         }
@@ -87,63 +87,52 @@ void desenhaCaixas(void)
 
 void escreveTexto()
 {
-    int OFFSET = 5;
-    for (int c = 0; c < 20; c++)
+    int offsetCol = 5, offsetLin = 3;
+    for (int c = 0; c < maxCaracteres; c++)
     {
-        mpcSetChar(5, c + OFFSET, texto1[c], F_STD, BLACK, YELLOW_1, 1);
+        mpcSetChar(posicaoInicial, c + offsetCol, texto1[c], F_STD, BLACK, YELLOW_1, 1);
     }
     if (estagio == 1)
     {
-        for (int c = 0; c < 20; c++)
+        for (int c = 0; c < maxCaracteres; c++)
         {
-            mpcSetChar(8, c + OFFSET, texto1[c], F_STD, BLACK, BLUE_6, 1);
+            mpcSetChar(posicaoInicial + offsetLin, c + offsetCol, texto1[c], F_STD, BLACK, BLUE_6, 1);
         }
-        for (int c = 0; c < 20; c++)
+        for (int c = 0; c < maxCaracteres; c++)
         {
-            mpcSetChar(11, c + OFFSET, texto3[c], F_STD, BLACK, BLUE_6, 1);
+            mpcSetChar(posicaoInicial + offsetLin * 2, c + offsetCol, texto3[c], F_STD, BLACK, BLUE_6, 1);
         }
 
         for (int cont = 0; cont < strlen(qtdCaracteres); cont++)
         {
-            mpcSetChar(14, 5 + cont, qtdCaracteres[cont], F_STD, BLACK, BLUE_6, 1);
+            mpcSetChar(posicaoInicial + offsetLin * 3, posicaoInicial + cont, qtdCaracteres[cont], F_STD, BLACK, BLUE_6, 1);
         }
-            mpcSetChar(14, 16, num1, F_STD, BLACK, BLUE_6, 1);
-            mpcSetChar(14, 17, num2, F_STD, BLACK, BLUE_6, 1);
-
+            mpcSetChar(posicaoInicial + offsetLin * 3, 16, dezenaQtdCaract, F_STD, BLACK, BLUE_6, 1);
+            mpcSetChar(posicaoInicial + offsetLin * 3, 17, unidadeQtdCaract, F_STD, BLACK, BLUE_6, 1);
     }
 }
 
 void deletar(int c)
 {
-    int deslocando = 1;
-    while (deslocando)
+    while (texto1[c] != ' ')
     {
         texto1[c] = texto1[c + 1];
         c++;
-        if (texto1[c] == ' ')
-        {
-            deslocando = 0;
-        }
     }
 }
 
 void fimTexto(int c)
 {
-    int varrendo = 1;
-    while (varrendo)
+    while (texto1[c - posicaoInicial] != ' ')
     {
-        if (texto1[c - 5] == ' ')
-        {
-            varrendo = 0;
-        }
         c++;
     }
-    cursorCol = c - 1;
+    cursorCol = c;
 }
 
 void maiusculo()
 {
-    for (int i = 0; i <= 20; i++)
+    for (int i = 0; i <= maxCaracteres; i++)
     {
         if (texto3[i] >= 'a' && texto3[i] <= 'z')
         {
@@ -152,40 +141,32 @@ void maiusculo()
     }
 }
 
-void calculaTamanho (int cont)
+void converteTamanhoAscii (int cont)
 {
-    int numA = 0, numB = 0;
+    int dezena = 0, unidade = 0;
     if (cont > 9)
     {
-        numA = cont / 10;
-        numB = cont % 10;
-        num1 = numA + 48;
-        num2 = numB + 48;
+        dezena = cont / 10;
+        unidade = cont % 10;
+        dezenaQtdCaract = dezena + 48;
+        unidadeQtdCaract = unidade + 48;
     }
     else
     {
-        num1 = 48;
-        num2 = cont + 48;
+        dezenaQtdCaract = 48;
+        unidadeQtdCaract = cont + 48;
     }
 }
 
 void inverteString()
 {
-    int cont = 0, contando = 1;
-    while (contando)
+    int cont = 0;
+    while (texto1[cont] != ' ')
     {
-        if (texto1[cont] != ' ')
-        {
-            cont++;
-        }
-        else
-        {
-            contando = 0;
-        }
+        cont++;
     }
-    tamanhoPalavra = cont - 1;
 
-    for (int i = 0; i <= 20; i++)
+    for (int i = 0; i <= maxCaracteres; i++)
     {
         texto3[i] = texto1[i];
     }
@@ -202,7 +183,7 @@ void inverteString()
         j--;
     }
     maiusculo();
-    calculaTamanho(cont);
+    converteTamanhoAscii(cont);
 }
 // funcao que eh camada a cada frame pela callback cbUpdate() para atualizar a tela
 void displayApp(void)
@@ -218,12 +199,7 @@ void displayApp(void)
     desenhaCaixas();
     escreveTexto();
     mpcSetCursorPos(cursorLin, cursorCol);
-
-    mostraTexto(2, 3, msg);
-
-    // desenha a imagem na posição do mouse
-    // mpcShowImg(5, 7, idDaImagem, 1);
-    // mpcShowImg(cursorLin-7, cursorCol-17, idDaImagem, 1);
+    mostraTexto(posicaoInicial - 3, posicaoInicial - 2, msg);
 }
 
 // funcao auxiliar para exibir strings na tela.
@@ -231,7 +207,7 @@ void mostraTexto(int l, int c, char *msg)
 {
     for (int cont = 0; cont < strlen(msg); cont++)
     {
-        mpcSetChar(l, c + cont, msg[cont], F_SN, BLACK, GREEN_1, 1);
+        mpcSetChar(l, c + cont, msg[cont], F_SN, BLACK, GREEN_3, 1);
     }
 }
 
@@ -240,18 +216,12 @@ void mostraTexto(int l, int c, char *msg)
 //*************************************************************
 void cbMouse(int lin, int col, int button, int state)
 {
-    printf("\nO Mouse foi movido: %d %d %d %d ", lin, col, button, state);
-
-    // quando o mouse eh movido, faz-se o cursor acompanha-lo
-    // mpcSetCursorPos(lin, col);
-    // guarda-se as coordenadas do cursor para fazer a insercao de texto na callback cbKeyboard()
-    // cursorLin = lin;
-    // cursorCol = col;
+    //printf("\nO Mouse foi movido: %d %d %d %d ", lin, col, button, state);
 }
 
 void cbKeyboard(int key, int modifier, bool special, bool up)
 {
-    printf("\nAlguma tecla foi pressionada: %d %d %d %d", key, modifier, special, up);
+    //printf("\nAlguma tecla foi pressionada: %d %d %d %d", key, modifier, special, up);
 
     if (special) // se for uma tecla especial cai aqui
     {
@@ -260,25 +230,21 @@ void cbKeyboard(int key, int modifier, bool special, bool up)
             switch (key)
             {
             case 100: // seta para esquerda
-                if (cursorCol > 6)
+                if (cursorCol > posicaoInicial + 1)
                 {
                     cursorCol--;
                 }
                 break;
-            // case 101: // seta para cima
-            // cursorLin--;
-            // break;
+
             case 102: // seta para direita
-                if (cursorCol < 25 && texto1 [cursorCol - 5] != ' ')
+                if (cursorCol < maxCaracteres + 5 && texto1[cursorCol - posicaoInicial] != ' ')
                 {
                     cursorCol++;
                 }
                 break;
-            // case 103: // seta para baixo
-            // cursorLin++;
-            // break;
-            case 106:
-                cursorCol = 5;
+
+            case 106: //home
+                cursorCol = posicaoInicial;
                 break;
             }
         }
@@ -288,45 +254,45 @@ void cbKeyboard(int key, int modifier, bool special, bool up)
         if (up == false) // soh pega o caractere quando ele for pressionado, ou seja, quando nao eh up.
         {
             // usa-se as coordenadas do cursor para inserir o texto.
-            // mpcSetChar(cursorLin, cursorCol, key, F_STD, BLACK, YELLOW_5, 1 );
             // a cada caractere digitado, move-se o cursor para frente.
             // guarda-se a informacao em uma matriz para reexibicao a cada frame. Senao, nao aparece nada na tela.
-            if (cursorCol >= 5 && cursorCol <= 25 && cursorLin == 5)
+            if (cursorCol >= posicaoInicial && cursorCol <= posicaoInicial + maxCaracteres && cursorLin == posicaoInicial)
             {
-                // texto[cursorLin][cursorCol] = key;
-                // texto[cursorLin + 3][cursorCol] = key;
-                if (key >= 'A' && key <= 'Z' && cursorCol < 25)
+                if (key >= 'A' && key <= 'Z' && cursorCol < posicaoInicial + maxCaracteres) //digitacao
                 {
-                    texto1[cursorCol - 5] = key;
+                    texto1[cursorCol - posicaoInicial] = key;
                     cursorCol++;
                 }
 
-                if (key >= 'a' && key <= 'z' && cursorCol < 25)
+                if (key >= 'a' && key <= 'z' && cursorCol < posicaoInicial + maxCaracteres) //digitacao
                 {
-                    texto1[cursorCol - 5] = key;
+                    texto1[cursorCol - posicaoInicial] = key;
                     cursorCol++;
                 }
                 switch (key)
                 {
-                case 127:
-                    deletar(cursorCol - 5);
-                    break;
 
-                case 8:
-                    if (cursorCol < 25 && cursorCol > 5)
+                case 8: //backspace
+                    if (cursorCol <= posicaoInicial + maxCaracteres && cursorCol > posicaoInicial)
                     {
-                        texto1[cursorCol - 6] = ' ';
+                        texto1[cursorCol - (posicaoInicial+1)] = ' ';
                         cursorCol--;
                     }
                     break;
 
-                case 50: // end
-                    fimTexto(cursorCol);
-                    break;
-                case 13:
+                case 13: //enter
                     inverteString();
                     estagio = 1;
                     break;
+
+                case 50: // end (2 funciona como END)
+                    fimTexto(cursorCol);
+                    break;
+
+                case 127: //delete
+                    deletar(cursorCol - posicaoInicial);
+                    break;
+
                 }
             }
         }
