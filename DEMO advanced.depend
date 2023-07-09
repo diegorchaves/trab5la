@@ -1,0 +1,40 @@
+# depslib dependency file v1.0
+1337885062 source:d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\src\avancado.cpp
+	"mpc_c.h"
+	"demo1.h"
+	<math.h>
+
+1293057508 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\mpc_c.h
+	<GL/glut.h>
+	"definitions.h"
+
+924731306 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\gl\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1107059720 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\gl\gl.h
+
+1107059720 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\gl\glu.h
+	<stddef.h>
+	<GL/gl.h>
+
+1322679380 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\definitions.h
+
+1337886474 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\src\demo1.h
+	<string>
+
+1338230208 source:d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\src\demo1.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"mpc_c.h"
+	"demo1.h"
+
+1337863474 source:d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\src\main.cpp
+	"mpc_c.h"
+	"demo2.h"
+
+1359023438 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\src\demo2.h
+	<string>
+

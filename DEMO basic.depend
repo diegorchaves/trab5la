@@ -1,0 +1,63 @@
+# depslib dependency file v1.0
+1373890716 source:d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\src\demo2.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"mpc_c.h"
+	"demo2.h"
+
+1293057508 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\mpc_c.h
+	<GL/glut.h>
+	"definitions.h"
+
+924731306 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\gl\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1107059720 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\gl\gl.h
+
+1107059720 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\gl\glu.h
+	<stddef.h>
+	<GL/gl.h>
+
+1322679380 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\include\definitions.h
+
+1359023438 d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\src\demo2.h
+	<string>
+
+1337863474 source:d:\ufsm\disciplinas\estruturas de dados\programas\mpc\version_4.7\demo\src\main.cpp
+	"mpc_c.h"
+	"demo2.h"
+
+1688856094 source:c:\users\diego\desktop\cc\la\trabalho v\mpc_47\src\demo2.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"mpc_c.h"
+	"demo2.h"
+
+1293061108 c:\users\diego\desktop\cc\la\trabalho v\mpc_47\include\mpc_c.h
+	<GL/glut.h>
+	"definitions.h"
+
+924731306 c:\users\diego\desktop\cc\la\trabalho v\mpc_47\include\gl\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1107063320 c:\users\diego\desktop\cc\la\trabalho v\mpc_47\include\gl\gl.h
+
+1107063320 c:\users\diego\desktop\cc\la\trabalho v\mpc_47\include\gl\glu.h
+	<stddef.h>
+	<GL/gl.h>
+
+1688776511 c:\users\diego\desktop\cc\la\trabalho v\mpc_47\include\definitions.h
+
+1359027038 c:\users\diego\desktop\cc\la\trabalho v\mpc_47\src\demo2.h
+	<string>
+
+1337863474 source:c:\users\diego\desktop\cc\la\trabalho v\mpc_47\src\main.cpp
+	"mpc_c.h"
+	"demo2.h"
+
