@@ -19,7 +19,7 @@ char msg[] = "Setas movem o cursor, ENTER para fazer as operacoes, a tecla 2 fun
 char qtdCaracteres[] = "Qtd caract:";
 
 // matriz global que guarda o texto digitado pelo usuario para ser exibido a cada render
-// sem essa matriz, o texto digitado é perdido, pois o MPC nao tem buffer permanente de dados
+// sem essa matriz, o texto digitado ï¿½ perdido, pois o MPC nao tem buffer permanente de dados
 char texto[APP_LINES][APP_COLUMNS];
 
 char *texto1 = (char *)malloc(21 * sizeof(char));
@@ -42,7 +42,7 @@ void initMpc(void)
     // inicializa a matriz com espacos, que eh o padrao de "vazio" no MPC
     memset(texto, ' ', APP_LINES * APP_COLUMNS);
 
-    // posição e tamanho da 'janela' onde as IMAGENS poderão aparecer
+    // posiï¿½ï¿½o e tamanho da 'janela' onde as IMAGENS poderï¿½o aparecer
     mpcSetClippingArea(0, 0, APP_LINES, APP_COLUMNS);
 
     for (int i = 0; i < maxCaracteres + 1; i++)
@@ -161,14 +161,14 @@ void converteTamanhoAscii (int cont)
 
 void inverteString()
 {
-    int cont = 0, index = posicaoInicial + maxCaracteres;
-    while (index >= posicaoInicial)
+    int cont = 0, index = 0;
+    while (index < maxCaracteres)
     {
         if (texto1[index] != ' ')
         {
             cont++;
         }
-        index--;
+        index++;
     }
 
     for (int i = 0; i <= maxCaracteres; i++)
